@@ -1,16 +1,32 @@
-# This is a sample Python script.
+import argparse
+from PIL import Image
+import matplotlib.pyplot as plt
+from png_parser import parse_png
+from display import fourier_transform
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+#using argparse to accept arguments from command line
+parser = argparse.ArgumentParser(description="PNG Decoder")
+parser.add_argument("file", help="Path to PNG file")
+parser.add_argument("--fft", action="store_true", help="Show FFT spectrum")
+parser.add_argument("--anonymize", metavar="OUTPUT", help="Strip metadata and save to OUTPUT")
+args = parser.parse_args()
 
+#parsing image
+parse_png(args.file)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+8 to toggle the breakpoint.
+#displaying image
+img = Image.open(args.file)
+plt.figure("PNG Image")
+plt.imshow(img)
+plt.axis('off')
+plt.title(args.file)
+plt.show()
 
+#FFT spectrum display
+if args.fft:
+    gray = img.convert('L')
+    fourier_transform(gray)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+#anonymizing
+if args.anonymize:
+    pass  # TODO: anonymize
