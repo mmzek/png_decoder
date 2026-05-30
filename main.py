@@ -1,6 +1,8 @@
 import argparse
 from PIL import Image
 import matplotlib.pyplot as plt
+
+from anonymize import anonymize_png
 from png_parser import parse_png
 from display import fourier_transform
 
@@ -29,4 +31,4 @@ if args.fft:
 
 #anonymizing
 if args.anonymize:
-    pass  # TODO: anonymize
+    anonymize_png(args.file, "anonymized.png")
