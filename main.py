@@ -3,7 +3,7 @@ from PIL import Image
 import matplotlib.pyplot as plt
 
 from anonymize import anonymize_png
-from png_parser import parse_png
+from png_simple_parser import parse_png_chunks
 from display import fourier_transform
 
 #using argparse to accept arguments from command line
@@ -14,7 +14,7 @@ parser.add_argument("--anonymize", metavar="OUTPUT", help="Strip metadata and sa
 args = parser.parse_args()
 
 #parsing image
-parse_png(args.file)
+parse_png_chunks(args.file)
 
 #displaying image
 img = Image.open(args.file)
@@ -31,4 +31,4 @@ if args.fft:
 
 #anonymizing
 if args.anonymize:
-    anonymize_png(args.file, "anonymized.png")
+    anonymize_png(args.file, args.anonymize)
